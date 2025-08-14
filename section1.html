@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootcamp Program - Centered Horizontal Scroll</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3; 
+            --primary-hover-color: #004494;
+            --accent-color: #f39c12;
+            --text-color: #212529;
+            --text-muted: #6c757d;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.08);
+            --card-shadow-hover: 0 10px 15px rgba(0,0,0,0.07), 0 4px 6px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 4rem 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .header-title { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .header-subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+        /* --- CHANGE 1: CENTERING LOGIC (Part A) --- */
+        /* The scroller is now a block-level element that will center its inline children. */
+        .courses-scroller {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 1.5rem; /* Space for shadow and potential scrollbar */
+            text-align: center; /* This is the key to centering the inline-flex container */
+        }
+
+        /* --- CHANGE 2: HIDE SCROLLBAR --- */
+        /* Hides scrollbar for a cleaner mobile experience while maintaining functionality. */
+        .courses-scroller {
+            scrollbar-width: none; /* For Firefox */
+            -ms-overflow-style: none; /* For Internet Explorer and Edge */
+        }
+        .courses-scroller::-webkit-scrollbar {
+            display: none; /* For Chrome, Safari, and Opera */
+        }
+
+        /* --- CHANGE 1: CENTERING LOGIC (Part B) --- */
+        /* Changed from display:flex to inline-flex. This makes the container */
+        /* shrink-wrap its content, allowing text-align:center on the parent to work. */
+        .courses-container {
+            display: inline-flex; /* The second key to the centering logic */
+            gap: 2rem;
+            /* The parent's text-align will handle centering, so no padding tricks needed */
+            padding: 0.5rem 0.25rem; /* Small padding so hover shadows don't get cut off */
+        }
+
+        .course-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left; /* Reset text-align for card content */
+        }
+
+        .course-card:hover { transform: translateY(-8px); box-shadow: var(--card-shadow-hover); }
+        .card-image-container { position: relative; height: 180px; }
+        .card-image { width: 100%; height: 100%; display: block; object-fit: cover; }
+        .card-badge { position: absolute; top: 1rem; left: 1rem; background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); color: white; padding: 0.4rem 0.8rem; border-radius: 7px; font-size: 0.8rem; font-weight: 500; }
+        .card-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+        .course-meta { display: flex; gap: 1rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+        .course-meta-item { display: flex; align-items: center; gap: 0.4rem; }
+        .course-title { font-size: 1.25rem; font-weight: 600; line-height: 1.4; color: var(--text-color); margin-bottom: 1rem; min-height: 5.25rem; }
+        .course-rating { display: flex; align-items: center; margin-bottom: 1.5rem; }
+        .stars { color: var(--accent-color); margin-right: 0.5rem; }
+        .rating-number { font-weight: 600; color: var(--text-color); }
+        .start-button { display: block; width: 100%; padding: 0.9rem; background-color: var(--primary-color); border: none; border-radius: 8px; text-align: center; text-decoration: none; color: #ffffff; font-weight: 600; transition: background-color 0.2s ease, transform 0.2s ease; margin-top: auto; cursor: pointer; }
+        .start-button:hover { background-color: var(--primary-hover-color); transform: translateY(-2px); }
+        
+        @media (max-width: 768px) {
+            body { padding: 3rem 0; }
+            .container { padding: 0 1.5rem; }
+            .header-title { font-size: 2.2rem; }
+        }
+        
+        @media (max-width: 480px) {
+            body { padding: 2rem 0; }
+            .container { padding: 0 1rem; }
+            .header-title { font-size: 1.8rem; }
+            .header-subtitle { font-size: 1rem; }
+            .course-card { width: 280px; }
+            .card-content { padding: 1.25rem; }
+            .course-title { font-size: 1.1rem; min-height: auto; }
+            .course-meta { font-size: 0.8rem; }
+            .start-button { font-size: 0.95rem; padding: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="header-title">Our Bootcamp Programs</h1>
+            <p class="header-subtitle">Hand-picked courses designed by industry experts to help you achieve your goals.</p>
+        </header>
+    </div>
+
+    <div class="courses-scroller">
+        <div class="courses-container">
+            <!-- Cards remain the same -->
+            <!-- Card 1: Drawing -->
+            <div class="course-card">
+                <div class="card-image-container">
+                    <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Graphic design workspace" class="card-image">
+                    <span class="card-badge">Beginner</span>
+                </div>
+                <div class="card-content">
+                    <div class="course-meta">
+                        <span class="course-meta-item"><i class="fas fa-user-circle"></i> Theartschool</span>
+                        <span class="course-meta-item"><i class="fas fa-folder-open"></i> Design</span>
+                    </div>
+                    <h2 class="course-title">Ultimate Drawing Course: From Novice to Expert</h2>
+                    <div class="course-rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-number">4.9</span>
+                    </div>
+                    <a href="#" class="start-button">Start Learning</a>
+                </div>
+            </div>
+
+            <!-- Card 2: English -->
+            <div class="course-card">
+                <div class="card-image-container">
+                    <img src="https://images.unsplash.com/photo-1521727863492-14022d8a5147?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Person studying a language" class="card-image">
+                    <span class="card-badge">Intermediate</span>
+                </div>
+                <div class="card-content">
+                    <div class="course-meta">
+                        <span class="course-meta-item"><i class="fas fa-user-circle"></i> Lingo Masters</span>
+                        <span class="course-meta-item"><i class="fas fa-folder-open"></i> Language</span>
+                    </div>
+                    <h2 class="course-title">Master Course: English Grammar, and Fluent Speaking</h2>
+                    <div class="course-rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-number">4.7</span>
+                    </div>
+                    <a href="#" class="start-button">Start Learning</a>
+                </div>
+            </div>
+
+            <!-- Card 3: Web Development -->
+            <div class="course-card">
+                <div class="card-image-container">
+                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Code on a computer screen" class="card-image">
+                    <span class="card-badge">Beginner</span>
+                </div>
+                <div class="card-content">
+                    <div class="course-meta">
+                        <span class="course-meta-item"><i class="fas fa-user-circle"></i> DevPro</span>
+                        <span class="course-meta-item"><i class="fas fa-folder-open"></i> Development</span>
+                    </div>
+                    <h2 class="course-title">The Complete 2024 Web Development Bootcamp</h2>
+                    <div class="course-rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        <span class="rating-number">4.9</span>
+                    </div>
+                    <a href="#" class="start-button">Start Learning</a>
+                </div>
+            </div>
+
+            <!-- Card 4: Finance (Removed 5th card to better show centering on desktop) -->
+            <div class="course-card">
+                <div class="card-image-container">
+                    <img src="https://images.unsplash.com/photo-1642052551460-7372314544a0?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Financial charts and graphs" class="card-image">
+                    <span class="card-badge">All Levels</span>
+                </div>
+                <div class="card-content">
+                    <div class="course-meta">
+                        <span class="course-meta-item"><i class="fas fa-user-circle"></i> Fin-Ed</span>
+                        <span class="course-meta-item"><i class="fas fa-folder-open"></i> Finance</span>
+                    </div>
+                    <h2 class="course-title">The Complete Corporate & Personal Finance Course</h2>
+                    <div class="course-rating">
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        <span class="rating-number">5.0</span>
+                    </div>
+                    <a href="#" class="start-button">Start Learning</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
