@@ -25,14 +25,14 @@
     }
     .gallery-section h2{font-size:2rem;font-weight:600;margin-bottom:12px}
     .gallery-section p{
-      font-size:0.95rem;color:#666;max-width:600px;margin:0 auto 40px;line-height:1.6; /* Default margin-bottom for larger screens */
+      font-size:0.95rem;color:#666;max-width:600px;margin:0 auto 40px;line-height:1.6;
     }
 
     /* ---------- Carousel ---------- */
     .carousel{
       position:relative;
       width:100%;
-      height:360px; /* Adjust height as needed based on image aspect ratio */
+      height:420px; /* Adjusted height to accommodate larger images */
       perspective:1200px;
       overflow:hidden;
     }
@@ -47,8 +47,8 @@
     }
     .carousel .image-wrapper {
       position: absolute;
-      width: 200px; /* Base width for wrapper, same as max-width for img */
-      height: 300px; /* Base height for wrapper, same as max-height for img */
+      width: 240px; /* Increased base width for wrapper */
+      height: 360px; /* Increased base height for wrapper */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -72,8 +72,8 @@
       color: inherit;
     }
     .carousel img{
-      max-width:200px; /* Max width for images */
-      max-height:300px; /* Max height for images */
+      max-width:240px; /* Increased max width for images */
+      max-height:360px; /* Increased max height for images */
       width: auto; /* Allow natural width */
       height: auto; /* Allow natural height */
       object-fit: contain; /* Changed to contain to prevent cropping */
@@ -105,14 +105,14 @@
       transform: translateY(0);
     }
 
-    /* 3-D positions – adjusted for less gap and larger images */
-    .pos-3{transform:translateX(-360px) scale(.75) rotateY(30deg);opacity:1;z-index:1}
-    .pos-2{transform:translateX(-240px) scale(.85) rotateY(20deg);opacity:1;z-index:2}
-    .pos-1{transform:translateX(-120px) scale(.95) rotateY(10deg);opacity:1;z-index:3}
-    .pos0 {transform:translateX(0)    scale(1.1);   opacity:1;  z-index:5} /* Adjusted scale */
-    .pos1 {transform:translateX(120px) scale(.95) rotateY(-10deg);opacity:1;z-index:3}
-    .pos2 {transform:translateX(240px) scale(.85) rotateY(-20deg);opacity:1;z-index:2}
-    .pos3 {transform:translateX(360px) scale(.75) rotateY(-30deg);opacity:1;z-index:1}
+    /* 3-D positions – adjusted for larger images and wider spacing */
+    .pos-3{transform:translateX(-420px) scale(.75) rotateY(30deg);opacity:1;z-index:1} /* Increased translateX */
+    .pos-2{transform:translateX(-280px) scale(.85) rotateY(20deg);opacity:1;z-index:2} /* Increased translateX */
+    .pos-1{transform:translateX(-140px) scale(.95) rotateY(10deg);opacity:1;z-index:3} /* Increased translateX */
+    .pos0 {transform:translateX(0)    scale(1.15);   opacity:1;  z-index:5} /* Adjusted scale */
+    .pos1 {transform:translateX(140px) scale(.95) rotateY(-10deg);opacity:1;z-index:3} /* Increased translateX */
+    .pos2 {transform:translateX(280px) scale(.85) rotateY(-20deg);opacity:1;z-index:2} /* Increased translateX */
+    .pos3 {transform:translateX(420px) scale(.75) rotateY(-30deg);opacity:1;z-index:1} /* Increased translateX */
 
     /* Dots */
     .dots{
@@ -133,18 +133,14 @@
       .gallery-section {
         padding: 60px 0; /* Remove horizontal padding */
       }
-      /* Reduce margin-bottom for the paragraph */
-      .gallery-section p {
-        margin-bottom: 20px; /* Reduced from 40px */
-      }
-      .carousel .image-wrapper, .carousel img{max-width:180px;max-height:260px} /* Adjusted max sizes for responsiveness */
-      .pos-3{transform:translateX(-280px) scale(.70) rotateY(35deg)}
-      .pos-2{transform:translateX(-190px) scale(.80) rotateY(25deg)}
-      .pos-1{transform:translateX(-100px) scale(.90) rotateY(12deg)}
-      .pos0 {transform:translateX(0) scale(1.05)} /* Adjusted scale */
-      .pos1 {transform:translateX(100px) scale(.90) rotateY(-12deg)}
-      .pos2 {transform:translateX(190px) scale(.80) rotateY(-25deg)}
-      .pos3 {transform:translateX(280px) scale(.70) rotateY(-35deg)}
+      .carousel .image-wrapper, .carousel img{max-width:200px;max-height:300px} /* Adjusted max sizes for responsiveness */
+      .pos-3{transform:translateX(-320px) scale(.70) rotateY(35deg)} /* Adjusted translateX */
+      .pos-2{transform:translateX(-210px) scale(.80) rotateY(25deg)} /* Adjusted translateX */
+      .pos-1{transform:translateX(-110px) scale(.90) rotateY(12deg)} /* Adjusted translateX */
+      .pos0 {transform:translateX(0) scale(1.10)} /* Adjusted scale */
+      .pos1 {transform:translateX(110px) scale(.90) rotateY(-12deg)} /* Adjusted translateX */
+      .pos2 {transform:translateX(210px) scale(.80) rotateY(-25deg)} /* Adjusted translateX */
+      .pos3 {transform:translateX(320px) scale(.70) rotateY(-35deg)} /* Adjusted translateX */
     }
     @media (max-width:600px){
       /* Ensure padding remains 0 for very small screens */
@@ -154,18 +150,14 @@
       .gallery-section {
         padding: 60px 0; /* Remove horizontal padding */
       }
-      /* Reduce margin-bottom for the paragraph */
-      .gallery-section p {
-        margin-bottom: 15px; /* Further reduced for smaller screens */
-      }
-      .carousel .image-wrapper, .carousel img{max-width:140px;max-height:200px} /* Adjusted max sizes for responsiveness */
-      .pos-3{transform:translateX(-220px) scale(.65)}
-      .pos-2{transform:translateX(-150px) scale(.75)}
-      .pos-1{transform:translateX(-80px) scale(.88)}
-      .pos0 {transform:translateX(0) scale(1.0)} /* Adjusted scale */
-      .pos1 {transform:translateX(80px) scale(.88)}
-      .pos2 {transform:translateX(150px) scale(.75)}
-      .pos3 {transform:translateX(220px) scale(.65)}
+      .carousel .image-wrapper, .carousel img{max-width:160px;max-height:240px} /* Adjusted max sizes for responsiveness */
+      .pos-3{transform:translateX(-250px) scale(.65)} /* Adjusted translateX */
+      .pos-2{transform:translateX(-170px) scale(.75)} /* Adjusted translateX */
+      .pos-1{transform:translateX(-90px) scale(.88)} /* Adjusted translateX */
+      .pos0 {transform:translateX(0) scale(1.05)} /* Adjusted scale */
+      .pos1 {transform:translateX(90px) scale(.88)} /* Adjusted translateX */
+      .pos2 {transform:translateX(170px) scale(.75)} /* Adjusted translateX */
+      .pos3 {transform:translateX(250px) scale(.65)} /* Adjusted translateX */
     }
   </style>
 </head>
