@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,9 +24,17 @@
       text-align:center;
       padding:60px 10px;
     }
-    .gallery-section h2{font-size:2rem;font-weight:600;margin-bottom:12px}
+    .gallery-section h2{
+      font-size:2rem;
+      font-weight:600;
+      margin-bottom:12px;
+    }
     .gallery-section p{
-      font-size:0.95rem;color:#666;max-width:600px;margin:0 auto 40px;line-height:1.6;
+      font-size:0.95rem;
+      color:#666;
+      max-width:600px;
+      margin:0 auto 40px;
+      line-height:1.6;
     }
 
     /* ---------- Carousel ---------- */
@@ -63,6 +70,7 @@
       transform-style: preserve-3d;
       background-color: #f0f0f0;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .carousel .image-wrapper a {
@@ -117,16 +125,38 @@
 
     /* Dots */
     .dots{
-      display:flex;justify-content:center;gap:10px;margin-top:30px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-top:25px;
     }
     .dot{
-      width:10px;height:10px;background:#ddd;border-radius:50%;
-      transition:.3s;cursor:pointer;
+      width:10px;
+      height:10px;
+      background:#ddd;
+      border-radius:50%;
+      transition:.3s;
+      cursor:pointer;
     }
     .dot.active{background:#007bff;transform:scale(1.3)}
 
-    /* Responsive */
+    /* ---------- Responsive ---------- */
     @media (max-width:900px){
+      .gallery-section {
+        padding: 40px 5px; /* less vertical padding */
+      }
+      .gallery-section h2 {
+        font-size:1.6rem;
+        margin-bottom:8px;
+      }
+      .gallery-section p {
+        font-size:0.85rem;
+        margin-bottom:25px; /* reduced gap between text and carousel */
+      }
+
+      .carousel {
+        height: 360px;
+      }
       .carousel .image-wrapper, .carousel img{max-width:200px;max-height:300px}
       .pos-3{transform:translateX(-360px) scale(.70) rotateY(35deg)}
       .pos-2{transform:translateX(-240px) scale(.80) rotateY(25deg)}
@@ -135,8 +165,25 @@
       .pos1 {transform:translateX(120px) scale(.90) rotateY(-12deg)}
       .pos2 {transform:translateX(240px) scale(.80) rotateY(-25deg)}
       .pos3 {transform:translateX(360px) scale(.70) rotateY(-35deg)}
+      .dots { margin-top:18px; } /* reduced space between dots and carousel */
     }
+
     @media (max-width:600px){
+      .gallery-section {
+        padding: 30px 5px;
+      }
+      .gallery-section h2 {
+        font-size:1.4rem;
+        margin-bottom:6px;
+      }
+      .gallery-section p {
+        font-size:0.8rem;
+        margin-bottom:20px; /* tighter spacing before carousel */
+      }
+
+      .carousel {
+        height: 300px;
+      }
       .carousel .image-wrapper, .carousel img{max-width:160px;max-height:240px}
       .pos-3{transform:translateX(-280px) scale(.65)}
       .pos-2{transform:translateX(-190px) scale(.75)}
@@ -145,6 +192,7 @@
       .pos1 {transform:translateX(95px) scale(.88)}
       .pos2 {transform:translateX(190px) scale(.75)}
       .pos3 {transform:translateX(280px) scale(.65)}
+      .dots { margin-top:12px; } /* compact spacing */
     }
   </style>
 </head>
@@ -171,7 +219,6 @@
 
   <script>
     const carouselContainer = document.getElementById('carousel-container');
-    const track = document.getElementById('track');
     const imageWrappers = document.querySelectorAll('.carousel .image-wrapper');
     const dotsContainer = document.getElementById('dots');
     const total = imageWrappers.length;
@@ -201,15 +248,10 @@
       update();
     }
 
-    function startAuto() {
-      auto = setInterval(() => go(1), 3000);
-    }
+    function startAuto() { auto = setInterval(() => go(1), 3000); }
+    function stopAuto() { clearInterval(auto); }
 
-    function stopAuto() {
-      clearInterval(auto);
-    }
-
-    // --- Momentum Swipe Controls ---
+    // Momentum Swipe
     carouselContainer.addEventListener('touchstart', e => {
       stopAuto();
       startX = e.touches[0].clientX;
@@ -231,10 +273,22 @@
       const distance = lastX - startX;
       if (Math.abs(distance) > 40) {
         let dir = distance < 0 ? 1 : -1;
-        const momentum = Math.abs(velocity) > 0.5 ? 2 : 1; // Flick faster = skip one more
+        const momentum = Math.abs(velocity) > 0.5 ? 2 : 1;
         go(dir * momentum);
       }
       startAuto();
+    });
+
+    // Tap to focus
+    imageWrappers.forEach((wrapper, i) => {
+      wrapper.addEventListener('click', () => {
+        const currentPos = (i - idx + total) % total;
+        if (currentPos !== 3) { 
+          const moveDir = currentPos < 3 ? -1 : 1;
+          const steps = Math.abs(currentPos - 3);
+          for (let s = 0; s < steps; s++) go(moveDir);
+        }
+      });
     });
 
     // Pause on hover
