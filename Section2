@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Page</title>
+<style>
+    body{font-family:Arial,sans-serif;margin:0;padding:0;background:#fff}
+    .container{display:flex;padding:20px;max-width:1200px;margin:auto;gap:25px}
+    .left-section,.right-section{width:50%}
+
+    /* ----- DESKTOP ----- */
+    .left-content{display:flex;gap:20px}
+    .thumbnail-list{display:flex;flex-direction:column;gap:10px}
+    .thumbnail-list img{width:75px;height:100px;object-fit:cover;cursor:pointer;border-radius:5px;border:2px solid transparent}
+    .thumbnail-list img:hover{border-color:#ff4f79}
+    .main-image img{width:100%;border-radius:5px}
+
+    /* ----- MOBILE SLIDER ----- */
+    .mobile-slider{
+        display:none;position:relative;width:100%;height:350px;
+        overflow:hidden;border-radius:10px;touch-action:pan-y;
+    }
+    .slider-track{
+        display:flex;transition:transform .3s ease;height:100%;
+    }
+    .slider-track img{
+        min-width:100%;      /* forces ONE image per view */
+        width:100%;height:100%;object-fit:cover;flex-shrink:0;
+    }
+
+    /* ----- RIGHT SECTION ----- */
+    h1{line-height:1.4;font-size:26px}
+    .price{display:flex;gap:10px;align-items:center}
+    .price .current{color:#e60023;font-size:26px;font-weight:bold}
+    .price .old{text-decoration:line-through;color:#777}
+    .save{background:#ff4f79;color:#fff;padding:3px 10px;border-radius:4px;font-size:12px}
+    .color-options img{width:60px;height:80px;object-fit:cover;border-radius:5px;margin-right:6px;cursor:pointer}
+    .color-options img:hover{border:2px solid #ff4f79}
+    .size-boxes{display:flex;gap:10px;flex-wrap:nowrap}
+    .size-boxes button{padding:8px 12px;border:1px solid #aaa;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;transition:.25s}
+    .size-boxes button.active{background:#ffe6ec;border-color:#ff4f79;transform:scale(1.07);box-shadow:0 0 8px rgba(255,79,121,.4)}
+    .quantity{display:flex;align-items:center;gap:10px;margin:20px 0}
+    .qty-btn{padding:5px 15px;font-size:18px;border:1px solid #000;background:#fff;border-radius:4px;cursor:pointer}
+    .add-cart,.buy-now{width:100%;padding:16px;border:none;font-size:18px;border-radius:6px;margin-top:15px;cursor:pointer}
+    .add-cart{background:#f7b1b1}
+    .buy-now{background:#e60023;color:#fff}
+
+    /* ----- MOBILE RESPONSIVE ----- */
+    @media (max-width:768px){
+        .container{flex-direction:column;padding:10px}
+        .left-section,.right-section{width:100%}
+        .thumbnail-list{display:none}
+        .mobile-slider{display:block}
+        h1{font-size:20px}
+        .price .current{font-size:22px}
+        .size-boxes{flex-wrap:nowrap;justify-content:space-between}
+        .size-boxes button{font-size:13px;padding:7px 10px}
+    }
+    @media (max-width:480px){
+        h1{font-size:18px}
+        .add-cart,.buy-now{font-size:15px}
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <!-- LEFT SECTION -->
+    <div class="left-section">
+        <!-- MOBILE SLIDER (ONE image only) -->
+        <div class="mobile-slider" id="slider">
+            <div class="slider-track" id="track">
+                <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg" alt="1">
+                <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg" alt="2">
+                <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg" alt="3">
+                <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg" alt="4">
+            </div>
+        </div>
+
+        <!-- DESKTOP LAYOUT -->
+        <div class="left-content">
+            <div class="thumbnail-list">
+                <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg">
+                <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg">
+                <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg">
+                <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg">
+            </div>
+            <div class="main-image">
+                <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg">
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT SECTION -->
+    <div class="right-section">
+        <h1>Peach Shimmer Straight Salwar Suit Featuring Intricate Floral Embroidery</h1>
+        <div class="price">
+            <span class="current">₹2,999.00</span>
+            <span class="old">₹4,499.00</span>
+            <span class="save">SAVE 33%</span>
+        </div>
+        <p>Inclusive of all taxes</p>
+
+        <h3>Color: Peach</h3>
+        <div class="color-options">
+            <img src="https://i.pinimg.com/736x/62/2b/b8/622bb8bc020aec85aba99945c61ab91b.jpg">
+            <img src="https://i.pinimg.com/736x/f8/a9/ac/f8a9ac9bb3d48d62c8b8afe20b2e7bb4.jpg">
+            <img src="https://i.pinimg.com/736x/34/ba/a2/34baa24152634a5a917969589353299d.jpg">
+            <img src="https://i.pinimg.com/736x/07/93/ce/0793ceda0792aa5cf96be59051512755.jpg">
+        </div>
+
+        <h3>Size:</h3>
+        <div class="size-boxes">
+            <button onclick="selectSize(this)">S</button>
+            <button class="active" onclick="selectSize(this)">M</button>
+            <button onclick="selectSize(this)">L</button>
+            <button onclick="selectSize(this)">XL</button>
+            <button onclick="selectSize(this)">XXL</button>
+            <button onclick="selectSize(this)">3XL</button>
+        </div>
+
+        <h3>Quantity:</h3>
+        <div class="quantity">
+            <button class="qty-btn">-</button><span>1</span><button class="qty-btn">+</button>
+        </div>
+
+        <button class="add-cart">ADD TO CART</button>
+        <button class="buy-now">BUY NOW</button>
+    </div>
+</div>
+
+<script>
+    const slider = document.getElementById('slider');
+    const track  = document.getElementById('track');
+    const images = track.children;
+    const total  = images.length;
+    let index = 0, startX = 0, prevTranslate = 0, currentTranslate = 0, isDown = false;
+
+    // set exact width for the track (total images × 100%)
+    function setTrackWidth() {
+        track.style.width = `${total * 100}%`;
+    }
+    setTrackWidth();
+
+    // ---- TOUCH HANDLERS ----
+    slider.addEventListener('touchstart', e => {
+        e.preventDefault();
+        isDown = true;
+        startX = e.touches[0].clientX;
+        track.style.transition = 'none';
+    });
+
+    slider.addEventListener('touchmove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const moveX = e.touches[0].clientX - startX;
+        currentTranslate = prevTranslate + moveX;
+        track.style ecosystems = `translateX(${currentTranslate}px)`;
+    });
+
+    slider.addEventListener('touchend', e => {
+        if (!isDown) return;
+        isDown = false;
+        track.style.transition = 'transform .3s ease';
+
+        const moved = e.changedTouches[0].clientX - startX;
+        if (moved < -50 && index < total - 1) index++;
+        if (moved > 50 && index > 0) index--;
+
+        prevTranslate = index * -slider.offsetWidth;
+        track.style.transform = `translateX(${prevTranslate}px)`;
+    });
+
+    // ---- RESIZE (re-calculate slide width) ----
+    window.addEventListener('resize', () => {
+        setTrackWidth();
+        prevTranslate = index * -slider.offsetWidth;
+        track.style.transform = `translateX(${prevTranslate}px)`;
+    });
+
+    function selectSize(btn) {
+        document.querySelectorAll('.size-boxes button')
+                .forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+</script>
+</body>
+</html>
